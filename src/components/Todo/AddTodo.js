@@ -1,36 +1,41 @@
-import React, { useState } from "react";
-import classes from "./AddTodo.module.css";
-import Button from "../UI/Button";
+import React, { useState } from 'react';
+import classes from './AddTodo.module.css';
+import Button from '../UI/Button';
+import { useDispatch } from 'react-redux';
+import { createNote } from '../store/reducer';
 
 const AddTodo = () => {
-  const [todo, setTodo] = useState({ title: "", task: "" });
+	const [todo, setTodo] = useState({ title: '', task: '' });
 
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
+	const dispatch = useDispatch();
 
-    setTodo((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+	const changeHandler = (e) => {
+		const { name, value } = e.target;
 
-  const addHandler = (e) => {
-    e.preventDefault();
-  };
+		setTodo((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
 
-  return (
-    <form onSubmit={addHandler} className={classes.input}>
-      <div>
-        <label>Title</label>
-        <input type="text" onChange={changeHandler} />
-      </div>
-      <div>
-        <label>Task</label>
-        <input type="text" onChange={changeHandler} />
-      </div>
-      <Button>Add Task</Button>
-    </form>
-  );
+	const addHandler = (e) => {
+		e.preventDefault();
+		dispatch(createNote(todo));
+	};
+
+	return (
+		<form onSubmit={addHandler} className={classes.input}>
+			<div>
+				<label>Title</label>
+				<input type="text" name="title" onChange={changeHandler} />
+			</div>
+			<div>
+				<label>Task</label>
+				<input type="text" name="task" onChange={changeHandler} />
+			</div>
+			<Button type="submit">Add Task</Button>
+		</form>
+	);
 };
 
 export default AddTodo;

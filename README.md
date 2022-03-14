@@ -1,1 +1,1 @@
-# TO DO App with React and Recux
+# TO DO App with React and Redux
